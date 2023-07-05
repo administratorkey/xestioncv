@@ -6,6 +6,6 @@ const app = express()
 app.use(cors())
 
 app.get("/", apiRootController)
-app.post("/email/", postEmail)
+app.post("/email/", express.json(), postEmail)
 
 export default app

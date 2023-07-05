@@ -13,10 +13,10 @@ function apiRootController(_, response) {
  */
 function postEmail(request, response) {
     try {
-        const newEmail = Email.create(request.body)
+        Email.create(request.body)
+        const token = emailValidationJWT(request.body.address)
+        console.log("URL validación:", `http://localhost:8000/validate/${token}`)
         response.sendStatus(200)
-        const jwt = emailValidationJWT(request.body.address)
-        console.log(`http://localhost:8000/validate/${jwt}`)
     } catch (expception) {
         
     }

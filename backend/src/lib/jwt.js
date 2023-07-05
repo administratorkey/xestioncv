@@ -1,9 +1,9 @@
 import jwt from "jsonwebtoken"
 
 const JWTSubjects = {
-    EMAIL_VALIDATION: 0,
-    AUTENTIFICATION: 1,
-    AUTHORIZATION: 2,
+    EMAIL_VALIDATION: "email-validation",
+    AUTENTIFICATION: "user-autentification",
+    AUTHORIZATION: "user-authorization",
 }
 
 /**
@@ -12,9 +12,15 @@ const JWTSubjects = {
  * @returns {String}
  */
 function emailValidationJWT(email) {
-    const payload = { email }
-    const options = {subject: JWTSubjects.EMAIL_VALIDATION}
-    return jwt.sign(payload, process.env.JWT_SECRET ?? "JWT_SECRET", options)
+    try {
+        const payload = { email }
+        const secret = process.env.JWT_SECRET ?? "JWT_SECRET"
+        const options = { subject: JWTSubjects.EMAIL_VALIDATION, }
+        const token = jwt.sign(payload, secret, options)
+        return token
+    } catch (expception) {
+        console.error(expception);
+    }
 }
 
 export {
