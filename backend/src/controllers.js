@@ -1,6 +1,6 @@
 /** @typedef {import("express").RequestHandler} Controller*/
 import { Email } from "./db/models.js"
-import { emailValidationJWT } from "./lib/jwt.js"
+import { emailValidationJWT, validateEmailJWT } from "./lib/jwt.js"
 
 /** @type {Controller} */
 function apiRootController(_, response) {
@@ -22,7 +22,16 @@ function postEmail(request, response) {
     }
 }
 
+/** @type {Controller} */
+function validateEmail(request,response) {
+    const datosJWT = validateEmailJWT(request.params.jwtToken)
+    console.log(datosJWT)
+    //TODO
+    response.sendStatus(200) // Respuesta temporal
+}
+
 export {
     apiRootController,
-    postEmail
+    postEmail,
+    validateEmail
 }
