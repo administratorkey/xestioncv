@@ -7,8 +7,9 @@ const JWTSubjects = {
   AUTENTIFICATION: "user-autentification",
   AUTHORIZATION: "user-authorization",
 };
-
-console.log("Valor de JWT_SECRET:", process.env.JWT_SECRET); // Prueba valor JWT_SECRET
+console.log(); // Añade un espacio
+console.log("* Valor de JWT_SECRET:", process.env.JWT_SECRET); // Prueba valor JWT_SECRET
+console.log(); // Añade un espacio
 
 /**
  * Emite un JWT para validación de correo electrónico
@@ -21,7 +22,9 @@ function emailValidationJWT(email) {
     const secret = process.env.JWT_SECRET ?? "JWT_SECRET";
     const options = { subject: JWTSubjects.EMAIL_VALIDATION, expiresIn: JWT_EXPIRATION };
     const token = jwt.sign(payload, secret, options);
+    console.log();
     console.log("* Prueba Token JWT:", token); // Prueba del Token
+    console.log(); 
     return token;
   } catch (exception) {
     console.error(exception);
