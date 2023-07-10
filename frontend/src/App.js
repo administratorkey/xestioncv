@@ -1,54 +1,55 @@
 import React, { useState } from 'react';
 import './components/styles.css';
 
-// Definición del componente App
 function App() {
   const [email, setEmail] = useState('');
 
-  // Lista de correos electrónicos registrados (solo como ejemplo)
-  const correosRegistrados = ['example1@example.com', 'example2@example.com'];
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
-  // Función para solicitar registro de cuenta
-  const solicitarRegistro = () => {
-    // Verificar si el correo electrónico ya está registrado
-    if (existeCuenta(email)) {
-      alert('Ya existe una cuenta con este correo electrónico. Por favor, inicia sesión.');
-    } else {
-      // Guardar el solicitante en la base de datos o tomar las acciones necesarias
-      guardarSolicitante();
+    const data = {
+      address: email
+    };
 
-      alert('Se ha registrado la cuenta con éxito. ¡Bienvenido!');
-    }
+    fetch('http://localhost:8000/email/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => {
+      if (response.ok) {
+        console.log('El correo electrónico se envió correctamente.');
+        setEmail('');
+      } else {
+        console.log('Hubo un error al enviar el correo electrónico.');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      console.log('Hubo un error al enviar el correo electrónico.');
+    });
   };
 
-  // Función para verificar si la cuenta ya existe en la base de datos
-  const existeCuenta = (email) => {
-    // Verificar si el correo electrónico ya está en la lista de correos electrónicos registrados
-    return correosRegistrados.includes(email);
-  };
-
-  // Función para guardar el solicitante en la base de datos
-  const guardarSolicitante = () => {
-    // Lógica para guardar el solicitante en la base de datos
-    // Puedes implementar aquí tu lógica de almacenamiento de datos
-  };
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
   };
 
   return (
     <div>
-      <h1>Registro de Cuenta</h1>
-      <form>
+      <h1>Test Envio</h1>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="email">Correo electrónico</label>
         <input
           type="email"
-          placeholder="Dirección de correo electrónico"
+          id="email"
+          name="email"
           value={email}
           onChange={handleEmailChange}
           required
         />
-        <button type="button" onClick={solicitarRegistro}>Registrar</button>
+        <button type="submit">Enviar</button>
       </form>
     </div>
   );
