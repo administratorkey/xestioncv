@@ -20,7 +20,8 @@ async function postEmail(request, response) {
         response.sendStatus(200);
     } catch (exception) {
         console.error(exception);
-        response.sendStatus(500);
+        console.log("Esta dirección de correo electrónico ya se encuentra registrada");
+        response.sendStatus(409);
     }
 }
 
@@ -35,7 +36,7 @@ function validateEmail(request, response) {
                 response.sendStatus(200);
             })
             .catch((error) => {
-                console.error("Error al actualizar el estado de validación:", error);
+                console.log("Error al actualizar el estado de validación:", error);
                 response.sendStatus(500);
             });
     } else {
