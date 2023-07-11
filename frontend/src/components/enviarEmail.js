@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import ConflitoEmail from './conflitoEmail';
 
 const EnviarEmail = () => {
   const [email, setEmail] = useState('');
+  const [conflito, setConflito] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -21,6 +23,9 @@ const EnviarEmail = () => {
         if (response.ok) {
           console.log('El correo electrónico se envió correctamente.');
           setEmail('');
+          setConflito(false);
+        } else if (response.status === 409) {
+          setConflito(true);
         } else {
           console.log('Hubo un error al enviar el correo electrónico.');
         }
@@ -38,18 +43,22 @@ const EnviarEmail = () => {
   return (
     <div>
       <h1>Test Envío</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Correo electrónico</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          value={email}
-          onChange={handleEmailChange}
-          required
-        />
-        <button type="submit">Enviar</button>
-      </form>
+      {conflito ? (
+        <ConflitoEmail />
+      ) : (
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="email">Correo electrónico</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={email}
+            onChange={handleEmailChange}
+            required
+          />
+          <button type="submit">Enviar</button>
+        </form>
+      )}
     </div>
   );
 };
