@@ -40,11 +40,15 @@ const EnviarEmail = () => {
     setEmail(event.target.value);
   };
 
+  const resetConflito = () => {
+    setConflito(false);
+  };
+
   return (
     <div>
       <h1>Test Envío</h1>
       {conflito ? (
-        <ConflitoEmail />
+        <ConflitoEmail resetConflito={resetConflito} />
       ) : (
         <form onSubmit={handleSubmit}>
           <label htmlFor="email">Correo electrónico</label>
