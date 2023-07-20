@@ -1,13 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const GuardarEmail = ({ responseOk }) => {
+  const [showMessage, setShowMessage] = useState(false);
+
   useEffect(() => {
     if (responseOk) {
-      alert('Se ha registrado la cuenta con éxito. ¡Bienvenido!');
+      setShowMessage(true);
     }
   }, [responseOk]);
 
-  return null;
+  return (
+    <div>
+      {showMessage && (
+        <h1>Se ha registrado la cuenta con éxito. ¡Bienvenido!</h1>
+      )}
+    </div>
+  );
 };
 
 export default GuardarEmail;
