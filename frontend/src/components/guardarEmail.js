@@ -8,17 +8,13 @@ const GuardarEmail = ({ responseOk }) => {
   useEffect(() => {
     if (responseOk) {
       setShowMessage(true);
-      navigate('/vista-proceso-alta'); // Redirige a la ruta /vista-proceso-alta
+      navigate('/vista-proceso-alta'); // Redirige a la ruta "/vista-proceso-alta"
     }
   }, [responseOk, navigate]);
 
-  return (
-    <div>
-      {showMessage && (
-        <h1>Se ha registrado la cuenta con éxito. ¡Bienvenido!</h1>
-      )}
-    </div>
-  );
+ 
+  
+  
 };
 
 export default GuardarEmail;
