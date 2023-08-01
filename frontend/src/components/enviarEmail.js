@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ConflitoEmail from './conflitoEmail';
 import GuardarEmail from './guardarEmail';
 
@@ -6,6 +7,7 @@ const EnviarEmail = () => {
   const [email, setEmail] = useState('');
   const [conflito, setConflito] = useState(false);
   const [responseOk, setResponseOk] = useState(false);
+  const navigate = useNavigate(); // Obtener la función navigate para redireccionar
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -27,6 +29,9 @@ const EnviarEmail = () => {
           setEmail('');
           setConflito(false);
           setResponseOk(true);
+
+          // Redirigir al componente VistaProcesoAlta con el token en la URL
+          response.json().then(data => navigate(`/vista-proceso-alta?token=${data.validationURL}`));
         } else if (response.status === 409) {
           setConflito(true);
           setResponseOk(false);

@@ -4,7 +4,7 @@ import { emailValidationJWT, validateEmailJWT } from "./lib/jwt.js";
 
 /** @type {Controller} */
 function apiRootController(_, response) {
-    console.log("* Depuración de la API Ok! *")
+    console.log("* Depuración de la API Ok! *");
     response.send("API Ok!");
 }
 
@@ -16,8 +16,9 @@ async function postEmail(request, response) {
     try {
         const newEmail = await Email.create(request.body);
         const token = emailValidationJWT(newEmail.address);
-        console.log("URL validación:", `http://localhost:8000/validate/${token}`);
-        response.sendStatus(200);
+        const validationURL = `http://localhost:8000/validate/${token}`;
+        console.log("URL validación:", validationURL);
+        response.status(200).json({ validationURL }); // Send validationURL in the response
     } catch (exception) {
         console.error(exception);
         console.log("Esta dirección de correo electrónico ya se encuentra registrada");
