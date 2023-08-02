@@ -30,8 +30,8 @@ const EnviarEmail = () => {
           setConflito(false);
           setResponseOk(true);
 
-          // Redirigir al componente VistaProcesoAlta con el token en la URL
-          response.json().then(data => navigate(`/vista-proceso-alta?token=${data.validationURL}`));
+          // Redirigir al componente VistaProcesoAlta sin la parte redundante de la URL
+          response.json().then(data => navigate(`/vista-proceso-alta?token=${data.validationURL.split('http://localhost:8000/validate/')[1]}`));
         } else if (response.status === 409) {
           setConflito(true);
           setResponseOk(false);
